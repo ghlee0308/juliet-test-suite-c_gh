@@ -57,111 +57,111 @@ Cursor의 4가지 AI 코드 리뷰 방식에 대해 C/C++ 취약점 탐지 성�
 ### 1.4 테스트 설계 플로우
 
 ```mermaid
-flowchart TB
-    subgraph 준비단계["1. 준비 단계"]
-        A[Juliet Test Suite<br>테스트 케이스 선정] --> B[40개 케이스 분류]
-        B --> C[bad 28개<br>취약점 포함]
-        B --> D[good 12개<br>정상 코드]
+flowchart LR
+    subgraph A["1. 준비"]
+        A1[Juliet Test Suite<br>40개 케이스]
     end
     
-    subgraph 정답지["2. 정답지 구성"]
-        C --> E[ground_truth.json<br>CWE 매핑]
-        D --> E
-        E --> F[9개 CWE 카테고리<br>476, 416, 415, 401, 369, 366, 252, 480, 481]
+    subgraph B["2. 분류"]
+        B1[bad 28개]
+        B2[good 12개]
     end
     
-    subgraph PR구성["3. PR 구성"]
-        F --> G[Batch 1~4<br>각 10개 파일]
-        G --> H1[PR #9~12<br>Opus 4.5]
-        G --> H2[PR #17~20<br>Sonnet 4.5]
-        G --> H3[PR #21~24<br>Composer-1]
-        G --> H4[Agent Review<br>직접 리뷰]
+    subgraph C["3. 정답지"]
+        C1[ground_truth.json<br>9개 CWE 매핑]
     end
     
-    subgraph 실행["4. 테스트 실행"]
-        H1 --> I[사용자 커맨드<br>자동화 프롬프트]
-        H2 --> I
-        H3 --> I
-        H4 --> J[Agent Mode<br>직접 리뷰]
-        I --> K[PR 코멘트 수집]
-        J --> K
+    subgraph D["4. PR 구성"]
+        D1[Batch 1~4<br>각 10개 파일]
     end
     
-    subgraph 평가["5. 결과 평가"]
-        K --> L[ground_truth.json<br>비교]
-        L --> M[TP/TN/FP/FN<br>분류]
-        M --> N[성능 지표 계산<br>탐지율, 정확도, F1]
+    subgraph E["5. 모델 테스트"]
+        E1[Opus 4.5]
+        E2[Sonnet 4.5]
+        E3[Composer-1]
+        E4[Agent Review]
     end
     
-    subgraph 분석["6. 분석 및 보고"]
-        N --> O[모델별 비교]
-        O --> P[심각도별 분석]
-        P --> Q[비용 분석]
-        Q --> R[최종 권장사항]
+    subgraph F["6. 평가"]
+        F1[TP/TN/FP/FN<br>분류]
     end
+    
+    subgraph G["7. 분석"]
+        G1[성능 비교<br>권장사항 도출]
+    end
+    
+    A1 --> B1 & B2
+    B1 & B2 --> C1
+    C1 --> D1
+    D1 --> E1 & E2 & E3 & E4
+    E1 & E2 & E3 & E4 --> F1
+    F1 --> G1
 ```
 
 ### 1.5 테스트 프로세스 상세
 
 ```mermaid
 flowchart LR
-    subgraph 입력["입력"]
-        A1[테스트 코드<br>test_001~040]
+    subgraph 입력["1. 입력"]
+        A1[테스트 코드<br>40개 파일]
         A2[정답지<br>ground_truth.json]
     end
     
-    subgraph 모델테스트["AI 모델 테스트"]
-        B1[Opus 4.5<br>PR #9~12]
-        B2[Sonnet 4.5<br>PR #17~20]
-        B3[Composer-1<br>PR #21~24]
-        B4[Agent Review]
+    subgraph 테스트["2. AI 모델 테스트"]
+        B[4개 모델<br>Opus / Sonnet<br>Composer / Agent]
     end
     
-    subgraph 결과수집["결과 수집"]
-        C1[PR 코멘트<br>이슈 탐지 여부]
-        C2[토큰 사용량]
-        C3[프리미엄 요청 수]
+    subgraph 수집["3. 결과 수집"]
+        C1[탐지 결과]
+        C2[리소스 사용량]
     end
     
-    subgraph 평가지표["평가 지표"]
-        D1[탐지율<br>Recall]
-        D2[정확도<br>Accuracy]
-        D3[F1 Score]
-        D4[비용 효율]
+    subgraph 평가["4. 평가"]
+        D[정답지 비교<br>TP/TN/FP/FN]
     end
     
-    A1 --> B1 & B2 & B3 & B4
-    A2 --> E[비교 평가]
-    B1 & B2 & B3 & B4 --> C1 & C2 & C3
-    C1 --> E
-    E --> D1 & D2 & D3
-    C2 & C3 --> D4
+    subgraph 지표["5. 성능 지표"]
+        E1[탐지율 / 정확도]
+        E2[F1 Score]
+        E3[비용 효율]
+    end
+    
+    A1 --> B
+    B --> C1
+    B --> C2
+    C1 --> D
+    A2 --> D
+    D --> E1
+    D --> E2
+    C2 --> E3
 ```
 
 ### 1.6 CWE 분류 체계
 
 ```mermaid
-flowchart TB
-    subgraph Critical["Critical (12개)"]
-        C1[CWE-476<br>NULL Dereference<br>7개]
-        C2[CWE-369<br>Division by Zero<br>3개]
-        C3[CWE-252<br>Unchecked Return<br>2개]
+flowchart LR
+    subgraph Critical["Critical 12개"]
+        C1[CWE-476<br>NULL Deref 7개]
+        C2[CWE-369<br>Div Zero 3개]
+        C3[CWE-252<br>Unchecked 2개]
     end
     
-    subgraph Memory["Memory (12개)"]
-        M1[CWE-416<br>Use-After-Free<br>5개]
-        M2[CWE-415<br>Double Free<br>4개]
-        M3[CWE-401<br>Memory Leak<br>3개]
+    subgraph Memory["Memory 12개"]
+        M1[CWE-416<br>UAF 5개]
+        M2[CWE-415<br>Double Free 4개]
+        M3[CWE-401<br>Leak 3개]
     end
     
-    subgraph Logic["Logic (2개)"]
-        L1[CWE-480<br>Incorrect Operator<br>1개]
-        L2[CWE-481<br>Assign vs Compare<br>1개]
+    subgraph Logic["Logic 2개"]
+        L1[CWE-480<br>Operator 1개]
+        L2[CWE-481<br>Assign 1개]
     end
     
-    subgraph Concurrency["Concurrency (2개)"]
-        R1[CWE-366<br>Race Condition<br>2개]
+    subgraph Concurrency["Concurrency 2개"]
+        R1[CWE-366<br>Race 2개]
     end
+    
+    Critical --> Memory --> Logic --> Concurrency
 ```
 
 ---
