@@ -49,7 +49,7 @@ Cursor의 다양한 AI 코드 리뷰 방식에 대해 C/C++ 취약점 탐지 성
 
 ### 3.1 Opus 4.5 (PR #9, #10, #11, #12)
 
-#### Batch 1 (test_001 ~ test_010) 상세 결과
+#### 전체 상세 결과 (test_001 ~ test_040)
 
 | 테스트 | 정답 | 내 탐지 | 결과 |
 |--------|------|---------|------|
@@ -63,18 +63,6 @@ Cursor의 다양한 AI 코드 리뷰 방식에 대해 C/C++ 취약점 탐지 성
 | test_008 | bad (CWE-480) | △ 미정의 변수로 탐지 (CWE 다름) | △ 부분 정답 |
 | test_009 | bad (CWE-481) | ✅ Assignment vs Comparison 탐지 | ✅ 정답 |
 | test_010 | good | ❌ 이슈 없음 판정 | ✅ 정답 |
-
-| 항목 | 수치 |
-|------|------|
-| True Positive (취약점 정확히 탐지) | 6/7 (85.7%) |
-| True Negative (정상 코드 이슈 없음) | 2/3 (66.7%) |
-| False Positive (정상인데 이슈 판정) | 1 (test_006) |
-| Partial Match (CWE는 다르나 이슈 탐지) | 1 (test_008) |
-
-#### Batch 2 (test_011 ~ test_020) 상세 결과
-
-| 테스트 | 정답 | 내 탐지 | 결과 |
-|--------|------|---------|------|
 | test_011 | bad (CWE-476) | ✅ NULL Dereference 탐지 | ✅ 정답 |
 | test_012 | bad (CWE-416) | ✅ Use-After-Free 탐지 | ✅ 정답 |
 | test_013 | good | ⚠️ Undefined Macro 탐지 | △ 컴파일 이슈 |
@@ -85,38 +73,16 @@ Cursor의 다양한 AI 코드 리뷰 방식에 대해 C/C++ 취약점 탐지 성
 | test_018 | bad (CWE-476) | ✅ NULL Dereference 탐지 | ✅ 정답 |
 | test_019 | bad (CWE-369) | ✅ Division by Zero 탐지 | ✅ 정답 |
 | test_020 | good | ❌ 이슈 없음 판정 | ✅ 정답 |
-
-| 항목 | 수치 |
-|------|------|
-| True Positive (취약점 정확히 탐지) | 7/7 (100%) |
-| True Negative (정상 코드 이슈 없음) | 2/3 (66.7%) |
-| False Positive (정상인데 이슈 판정) | 1 (test_013) |
-
-#### Batch 3 (test_021 ~ test_030) 상세 결과
-
-| 테스트 | 정답 | 내 탐지 | 결과 |
-|--------|------|---------|------|
 | test_021 | bad (CWE-416) | ✅ Use-After-Free 탐지 | ✅ 정답 |
 | test_022 | bad (CWE-401) | ✅ Memory Leak 탐지 | ✅ 정답 |
 | test_023 | good | ❌ 이슈 없음 판정 | ✅ 정답 |
-| test_024 | bad (CWE-476) | ✅ NULL Dereference (잘못된 연산자) 탐지 | ✅ 정답 |
+| test_024 | bad (CWE-476) | ✅ NULL Dereference 탐지 | ✅ 정답 |
 | test_025 | bad (CWE-366) | ✅ Race Condition 탐지 | ✅ 정답 |
 | test_026 | good | ❌ 이슈 없음 판정 | ✅ 정답 |
 | test_027 | bad (CWE-252) | ✅ Unchecked Return Value 탐지 | ✅ 정답 |
 | test_028 | bad (CWE-415) | ✅ Double Free 탐지 | ✅ 정답 |
 | test_029 | bad (CWE-416) | ✅ Use-After-Free 탐지 | ✅ 정답 |
 | test_030 | good | ❌ 이슈 없음 판정 | ✅ 정답 |
-
-| 항목 | 수치 |
-|------|------|
-| True Positive (취약점 정확히 탐지) | 7/7 (100%) |
-| True Negative (정상 코드 이슈 없음) | 3/3 (100%) |
-| False Positive | 0 |
-
-#### Batch 4 (test_031 ~ test_040) 상세 결과
-
-| 테스트 | 정답 | 내 탐지 | 결과 |
-|--------|------|---------|------|
 | test_031 | bad (CWE-476) | ✅ NULL Dereference 탐지 | ✅ 정답 |
 | test_032 | bad (CWE-401) | ✅ Memory Leak 탐지 | ✅ 정답 |
 | test_033 | good | ❌ 이슈 없음 판정 | ✅ 정답 |
@@ -128,25 +94,20 @@ Cursor의 다양한 AI 코드 리뷰 방식에 대해 C/C++ 취약점 탐지 성
 | test_039 | good | ❌ 이슈 없음 판정 | ✅ 정답 |
 | test_040 | bad (CWE-476) | ✅ NULL Dereference 탐지 | ✅ 정답 |
 
+#### 📊 Opus 4.5 전체 통합 비율
+
 | 항목 | 수치 |
 |------|------|
-| True Positive (취약점 정확히 탐지) | 7/7 (100%) |
-| True Negative (정상 코드 이슈 없음) | 3/3 (100%) |
-| False Positive | 0 |
-
-#### Opus 4.5 전체 탐지 성능 요약
-
-| Batch | True Positive | False Positive | True Negative | False Negative |
-|-------|--------------|----------------|---------------|----------------|
-| 1 (test_001~010) | 7/7 | 1 (006) | 2 | 0 |
-| 2 (test_011~020) | 7/7 | 1 (013) | 2 | 0 |
-| 3 (test_021~030) | 7/7 | 0 | 3 | 0 |
-| 4 (test_031~040) | 7/7 | 0 | 3 | 0 |
-| **총계** | **28/28 (100%)** | **2** | **10** | **0** |
+| True Positive (취약점 정확히 탐지) | 28/28 (100%) |
+| True Negative (정상 코드 이슈 없음) | 10/12 (83.3%) |
+| False Positive (정상인데 이슈 판정) | 2 (test_006, test_013) |
+| False Negative (취약점 미탐지) | 0 |
+| **전체 정확도** | **95.0%** |
+| **F1 Score** | **96.6%** |
 
 ### 3.2 Sonnet 4.5 (PR #17, #18, #19, #20)
 
-#### Batch 1 (test_001 ~ test_010) 상세 결과
+#### 전체 상세 결과 (test_001 ~ test_040)
 
 | 테스트 | 정답 | 내 탐지 | 결과 |
 |--------|------|---------|------|
@@ -160,64 +121,30 @@ Cursor의 다양한 AI 코드 리뷰 방식에 대해 C/C++ 취약점 탐지 성
 | test_008 | bad (CWE-480) | ✅ Undefined Variable 탐지 | ✅ 정답 |
 | test_009 | bad (CWE-481) | ✅ Assignment vs Comparison 탐지 | ✅ 정답 |
 | test_010 | good | ❌ 이슈 없음 판정 | ✅ 정답 |
-
-| 항목 | 수치 |
-|------|------|
-| True Positive (취약점 정확히 탐지) | 7/7 (100%) |
-| True Negative (정상 코드 이슈 없음) | 2/3 (66.7%) |
-| False Positive (정상인데 이슈 판정) | 1 (test_006) |
-
-#### Batch 2 (test_011 ~ test_020) 상세 결과
-
-| 테스트 | 정답 | 내 탐지 | 결과 |
-|--------|------|---------|------|
 | test_011 | bad (CWE-476) | ✅ NULL Dereference 탐지 | ✅ 정답 |
 | test_012 | bad (CWE-416) | ✅ Use-After-Free 탐지 | ✅ 정답 |
 | test_013 | good | ⚠️ Undefined Macro 탐지 | ❌ False Positive |
-| test_014 | bad (CWE-366) | ✅ Race Condition 탐지 (2개 코멘트) | ✅ 정답 |
+| test_014 | bad (CWE-366) | ✅ Race Condition 탐지 | ✅ 정답 |
 | test_015 | bad (CWE-252) | ❌ 미탐지 | ❌ False Negative |
 | test_016 | good | ❌ 이슈 없음 판정 | ✅ 정답 |
 | test_017 | bad (CWE-415) | ✅ Double Free 탐지 | ✅ 정답 |
 | test_018 | bad (CWE-476) | ✅ NULL Dereference 탐지 | ✅ 정답 |
 | test_019 | bad (CWE-369) | ✅ Division by Zero 탐지 | ✅ 정답 |
 | test_020 | good | ⚠️ Undefined Function 탐지 | ❌ False Positive |
-
-| 항목 | 수치 |
-|------|------|
-| True Positive (취약점 정확히 탐지) | 6/7 (85.7%) |
-| True Negative (정상 코드 이슈 없음) | 1/3 (33.3%) |
-| False Positive (정상인데 이슈 판정) | 2 (test_013, test_020) |
-| False Negative (취약점 미탐지) | 1 (test_015) |
-
-#### Batch 3 (test_021 ~ test_030) 상세 결과
-
-| 테스트 | 정답 | 내 탐지 | 결과 |
-|--------|------|---------|------|
 | test_021 | bad (CWE-416) | ✅ Use-After-Free 탐지 | ✅ 정답 |
 | test_022 | bad (CWE-401) | ✅ Memory Leak 탐지 | ✅ 정답 |
 | test_023 | good | ❌ 이슈 없음 판정 | ✅ 정답 |
 | test_024 | bad (CWE-476) | ✅ NULL Dereference 탐지 | ✅ 정답 |
-| test_025 | bad (CWE-366) | ✅ Race Condition 탐지 (2개 코멘트) | ✅ 정답 |
+| test_025 | bad (CWE-366) | ✅ Race Condition 탐지 | ✅ 정답 |
 | test_026 | good | ⚠️ Undefined Symbols 탐지 | ❌ False Positive |
 | test_027 | bad (CWE-252) | ✅ Unchecked Return Value 탐지 | ✅ 정답 |
 | test_028 | bad (CWE-415) | ✅ Double Free 탐지 | ✅ 정답 |
 | test_029 | bad (CWE-416) | ✅ Use-After-Free 탐지 | ✅ 정답 |
 | test_030 | good | ❌ 이슈 없음 판정 | ✅ 정답 |
-
-| 항목 | 수치 |
-|------|------|
-| True Positive (취약점 정확히 탐지) | 7/7 (100%) |
-| True Negative (정상 코드 이슈 없음) | 2/3 (66.7%) |
-| False Positive (정상인데 이슈 판정) | 1 (test_026) |
-
-#### Batch 4 (test_031 ~ test_040) 상세 결과
-
-| 테스트 | 정답 | 내 탐지 | 결과 |
-|--------|------|---------|------|
 | test_031 | bad (CWE-476) | ✅ NULL Dereference 탐지 | ✅ 정답 |
 | test_032 | bad (CWE-401) | ✅ Memory Leak 탐지 | ✅ 정답 |
 | test_033 | good | ❌ 이슈 없음 판정 | ✅ 정답 |
-| test_034 | bad (CWE-369) | ✅ Division by Zero 탐지 (2개 코멘트) | ✅ 정답 |
+| test_034 | bad (CWE-369) | ✅ Division by Zero 탐지 | ✅ 정답 |
 | test_035 | bad (CWE-416) | ✅ Use-After-Free 탐지 | ✅ 정답 |
 | test_036 | good | ⚠️ Undefined Function 탐지 | ❌ False Positive |
 | test_037 | bad (CWE-476) | ✅ NULL Dereference 탐지 | ✅ 정답 |
@@ -225,25 +152,20 @@ Cursor의 다양한 AI 코드 리뷰 방식에 대해 C/C++ 취약점 탐지 성
 | test_039 | good | ❌ 이슈 없음 판정 | ✅ 정답 |
 | test_040 | bad (CWE-476) | ✅ NULL Dereference 탐지 | ✅ 정답 |
 
+#### 📊 Sonnet 4.5 전체 통합 비율
+
 | 항목 | 수치 |
 |------|------|
-| True Positive (취약점 정확히 탐지) | 7/7 (100%) |
-| True Negative (정상 코드 이슈 없음) | 2/3 (66.7%) |
-| False Positive (정상인데 이슈 판정) | 1 (test_036) |
-
-#### Sonnet 4.5 전체 탐지 성능 요약
-
-| Batch | True Positive | False Positive | True Negative | False Negative |
-|-------|--------------|----------------|---------------|----------------|
-| 1 (test_001~010) | 7/7 | 1 (006) | 2 | 0 |
-| 2 (test_011~020) | 6/7 | 2 (013, 020) | 1 | 1 (015) |
-| 3 (test_021~030) | 7/7 | 1 (026) | 2 | 0 |
-| 4 (test_031~040) | 7/7 | 1 (036) | 2 | 0 |
-| **총계** | **27/28 (96.4%)** | **5** | **7** | **1** |
+| True Positive (취약점 정확히 탐지) | 27/28 (96.4%) |
+| True Negative (정상 코드 이슈 없음) | 7/12 (58.3%) |
+| False Positive (정상인데 이슈 판정) | 5 (test_006, 013, 020, 026, 036) |
+| False Negative (취약점 미탐지) | 1 (test_015) |
+| **전체 정확도** | **85.0%** |
+| **F1 Score** | **90.0%** |
 
 ### 3.3 Composer-1 (PR #21, #22, #23, #24)
 
-#### Batch 1 (test_001 ~ test_010) 상세 결과
+#### 전체 상세 결과 (test_001 ~ test_040)
 
 | 테스트 | 정답 | 내 탐지 | 결과 |
 |--------|------|---------|------|
@@ -257,40 +179,16 @@ Cursor의 다양한 AI 코드 리뷰 방식에 대해 C/C++ 취약점 탐지 성
 | test_008 | bad (CWE-480) | ✅ Undefined Variable 탐지 | ✅ 정답 |
 | test_009 | bad (CWE-481) | ✅ Assignment vs Comparison 탐지 | ✅ 정답 |
 | test_010 | good | ❌ 이슈 없음 판정 | ✅ 정답 |
-
-| 항목 | 수치 |
-|------|------|
-| True Positive (취약점 정확히 탐지) | 6/7 (85.7%) |
-| True Negative (정상 코드 이슈 없음) | 2/3 (66.7%) |
-| False Positive (정상인데 이슈 판정) | 1 (test_006) |
-| False Negative (취약점 미탐지) | 1 (test_007) |
-
-#### Batch 2 (test_011 ~ test_020) 상세 결과
-
-| 테스트 | 정답 | 내 탐지 | 결과 |
-|--------|------|---------|------|
-| test_011 | bad (CWE-476) | ✅ NULL Dereference 탐지 (중복) | ✅ 정답 |
-| test_012 | bad (CWE-416) | ✅ Use-After-Free 탐지 (중복) | ✅ 정답 |
-| test_013 | good | ⚠️ Undefined Macro 탐지 (중복) | ❌ False Positive |
-| test_014 | bad (CWE-366) | ✅ Race Condition 탐지 (중복) | ✅ 정답 |
+| test_011 | bad (CWE-476) | ✅ NULL Dereference 탐지 | ✅ 정답 |
+| test_012 | bad (CWE-416) | ✅ Use-After-Free 탐지 | ✅ 정답 |
+| test_013 | good | ⚠️ Undefined Macro 탐지 | ❌ False Positive |
+| test_014 | bad (CWE-366) | ✅ Race Condition 탐지 | ✅ 정답 |
 | test_015 | bad (CWE-252) | ❌ 미탐지 | ❌ False Negative |
 | test_016 | good | ❌ 이슈 없음 판정 | ✅ 정답 |
 | test_017 | bad (CWE-415) | ✅ Double Free 탐지 | ✅ 정답 |
 | test_018 | bad (CWE-476) | ✅ NULL Dereference 탐지 | ✅ 정답 |
 | test_019 | bad (CWE-369) | ✅ Division by Zero 탐지 | ✅ 정답 |
 | test_020 | good | ⚠️ Undefined Function 탐지 | ❌ False Positive |
-
-| 항목 | 수치 |
-|------|------|
-| True Positive (취약점 정확히 탐지) | 6/7 (85.7%) |
-| True Negative (정상 코드 이슈 없음) | 1/3 (33.3%) |
-| False Positive (정상인데 이슈 판정) | 2 (test_013, test_020) |
-| False Negative (취약점 미탐지) | 1 (test_015) |
-
-#### Batch 3 (test_021 ~ test_030) 상세 결과
-
-| 테스트 | 정답 | 내 탐지 | 결과 |
-|--------|------|---------|------|
 | test_021 | bad (CWE-416) | ✅ Use-After-Free 탐지 | ✅ 정답 |
 | test_022 | bad (CWE-401) | ✅ Memory Leak 탐지 | ✅ 정답 |
 | test_023 | good | ❌ 이슈 없음 판정 | ✅ 정답 |
@@ -301,17 +199,6 @@ Cursor의 다양한 AI 코드 리뷰 방식에 대해 C/C++ 취약점 탐지 성
 | test_028 | bad (CWE-415) | ✅ Double Free 탐지 | ✅ 정답 |
 | test_029 | bad (CWE-416) | ✅ Use-After-Free 탐지 | ✅ 정답 |
 | test_030 | good | ❌ 이슈 없음 판정 | ✅ 정답 |
-
-| 항목 | 수치 |
-|------|------|
-| True Positive (취약점 정확히 탐지) | 7/7 (100%) |
-| True Negative (정상 코드 이슈 없음) | 2/3 (66.7%) |
-| False Positive (정상인데 이슈 판정) | 1 (test_026) |
-
-#### Batch 4 (test_031 ~ test_040) 상세 결과
-
-| 테스트 | 정답 | 내 탐지 | 결과 |
-|--------|------|---------|------|
 | test_031 | bad (CWE-476) | ✅ NULL Dereference 탐지 | ✅ 정답 |
 | test_032 | bad (CWE-401) | ✅ Memory Leak 탐지 | ✅ 정답 |
 | test_033 | good | ❌ 이슈 없음 판정 | ✅ 정답 |
@@ -323,25 +210,20 @@ Cursor의 다양한 AI 코드 리뷰 방식에 대해 C/C++ 취약점 탐지 성
 | test_039 | good | ❌ 이슈 없음 판정 | ✅ 정답 |
 | test_040 | bad (CWE-476) | ✅ NULL Dereference 탐지 | ✅ 정답 |
 
+#### 📊 Composer-1 전체 통합 비율
+
 | 항목 | 수치 |
 |------|------|
-| True Positive (취약점 정확히 탐지) | 7/7 (100%) |
-| True Negative (정상 코드 이슈 없음) | 2/3 (66.7%) |
-| False Positive (정상인데 이슈 판정) | 1 (test_036) |
-
-#### Composer-1 전체 탐지 성능 요약
-
-| Batch | True Positive | False Positive | True Negative | False Negative |
-|-------|--------------|----------------|---------------|----------------|
-| 1 (test_001~010) | 6/7 | 1 (006) | 2 | 1 (007) |
-| 2 (test_011~020) | 6/7 | 2 (013, 020) | 1 | 1 (015) |
-| 3 (test_021~030) | 7/7 | 1 (026) | 2 | 0 |
-| 4 (test_031~040) | 7/7 | 1 (036) | 2 | 0 |
-| **총계** | **26/28 (92.9%)** | **5** | **7** | **2** |
+| True Positive (취약점 정확히 탐지) | 26/28 (92.9%) |
+| True Negative (정상 코드 이슈 없음) | 7/12 (58.3%) |
+| False Positive (정상인데 이슈 판정) | 5 (test_006, 013, 020, 026, 036) |
+| False Negative (취약점 미탐지) | 2 (test_007, 015) |
+| **전체 정확도** | **82.5%** |
+| **F1 Score** | **88.1%** |
 
 ### 3.4 Agent Review (엑셀 데이터 기준)
 
-#### Batch 1 (test_001 ~ test_010) 상세 결과
+#### 전체 상세 결과 (test_001 ~ test_040)
 
 | 테스트 | 정답 | 내 탐지 | 결과 |
 |--------|------|---------|------|
@@ -355,18 +237,6 @@ Cursor의 다양한 AI 코드 리뷰 방식에 대해 C/C++ 취약점 탐지 성
 | test_008 | bad (CWE-480) | ❌ 미탐지 | ❌ False Negative |
 | test_009 | bad (CWE-481) | ✅ Assignment vs Comparison 탐지 | ✅ 정답 |
 | test_010 | good | ❌ 이슈 없음 판정 | ✅ 정답 |
-
-| 항목 | 수치 |
-|------|------|
-| True Positive (취약점 정확히 탐지) | 5/7 (71.4%) |
-| True Negative (정상 코드 이슈 없음) | 2/3 (66.7%) |
-| False Positive (정상인데 이슈 판정) | 1 (test_006) |
-| False Negative (취약점 미탐지) | 2 (test_005, test_008) |
-
-#### Batch 2 (test_011 ~ test_020) 상세 결과
-
-| 테스트 | 정답 | 내 탐지 | 결과 |
-|--------|------|---------|------|
 | test_011 | bad (CWE-476) | ✅ NULL Dereference 탐지 | ✅ 정답 |
 | test_012 | bad (CWE-416) | ✅ Use-After-Free 탐지 | ✅ 정답 |
 | test_013 | good | ❌ 이슈 없음 판정 | ✅ 정답 |
@@ -377,18 +247,6 @@ Cursor의 다양한 AI 코드 리뷰 방식에 대해 C/C++ 취약점 탐지 성
 | test_018 | bad (CWE-476) | ✅ NULL Dereference 탐지 | ✅ 정답 |
 | test_019 | bad (CWE-369) | ✅ Division by Zero 탐지 | ✅ 정답 |
 | test_020 | good | ❌ 이슈 없음 판정 | ✅ 정답 |
-
-| 항목 | 수치 |
-|------|------|
-| True Positive (취약점 정확히 탐지) | 5/7 (71.4%) |
-| True Negative (정상 코드 이슈 없음) | 3/3 (100%) |
-| False Positive | 0 |
-| False Negative (취약점 미탐지) | 2 (test_014, test_015) |
-
-#### Batch 3 (test_021 ~ test_030) 상세 결과
-
-| 테스트 | 정답 | 내 탐지 | 결과 |
-|--------|------|---------|------|
 | test_021 | bad (CWE-416) | ❌ Use-After-Free 미탐지 | ❌ False Negative |
 | test_022 | bad (CWE-401) | ✅ Memory Leak 탐지 | ✅ 정답 |
 | test_023 | good | ❌ 이슈 없음 판정 | ✅ 정답 |
@@ -399,18 +257,6 @@ Cursor의 다양한 AI 코드 리뷰 방식에 대해 C/C++ 취약점 탐지 성
 | test_028 | bad (CWE-415) | ❌ Double Free 미탐지 | ❌ False Negative |
 | test_029 | bad (CWE-416) | ❌ Use-After-Free 미탐지 | ❌ False Negative |
 | test_030 | good | ❌ 이슈 없음 판정 | ✅ 정답 |
-
-| 항목 | 수치 |
-|------|------|
-| True Positive (취약점 정확히 탐지) | 2/7 (28.6%) |
-| True Negative (정상 코드 이슈 없음) | 3/3 (100%) |
-| False Positive | 0 |
-| False Negative (취약점 미탐지) | 5 (test_021, 025, 027, 028, 029) |
-
-#### Batch 4 (test_031 ~ test_040) 상세 결과
-
-| 테스트 | 정답 | 내 탐지 | 결과 |
-|--------|------|---------|------|
 | test_031 | bad (CWE-476) | ❌ NULL Dereference 미탐지 | ❌ False Negative |
 | test_032 | bad (CWE-401) | ❌ Memory Leak 미탐지 | ❌ False Negative |
 | test_033 | good | ⚠️ Pointer to stack memory 탐지 | ❌ False Positive |
@@ -422,22 +268,16 @@ Cursor의 다양한 AI 코드 리뷰 방식에 대해 C/C++ 취약점 탐지 성
 | test_039 | good | ❌ 이슈 없음 판정 | ✅ 정답 |
 | test_040 | bad (CWE-476) | ❌ NULL Dereference 미탐지 | ❌ False Negative |
 
+#### 📊 Agent Review 전체 통합 비율
+
 | 항목 | 수치 |
 |------|------|
-| True Positive (취약점 정확히 탐지) | 1/7 (14.3%) |
-| True Negative (정상 코드 이슈 없음) | 2/3 (66.7%) |
-| False Positive (정상인데 이슈 판정) | 1 (test_033) |
-| False Negative (취약점 미탐지) | 6 (test_031, 032, 034, 037, 038, 040) |
-
-#### Agent Review 전체 탐지 성능 요약
-
-| Batch | True Positive | False Positive | True Negative | False Negative |
-|-------|--------------|----------------|---------------|----------------|
-| 1 (test_001~010) | 5/7 (71.4%) | 1 (006) | 2 | 2 (005, 008) |
-| 2 (test_011~020) | 5/7 (71.4%) | 0 | 3 | 2 (014, 015) |
-| 3 (test_021~030) | 2/7 (28.6%) | 0 | 3 | 5 (021, 025, 027, 028, 029) |
-| 4 (test_031~040) | 1/7 (14.3%) | 1 (033) | 2 | 6 (031, 032, 034, 037, 038, 040) |
-| **총계** | **13/28 (46.4%)** | **2** | **10** | **15** |
+| True Positive (취약점 정확히 탐지) | 13/28 (46.4%) |
+| True Negative (정상 코드 이슈 없음) | 10/12 (83.3%) |
+| False Positive (정상인데 이슈 판정) | 2 (test_006, 033) |
+| False Negative (취약점 미탐지) | 15 (test_005, 008, 014, 015, 021, 025, 027, 028, 029, 031, 032, 034, 037, 038, 040) |
+| **전체 정확도** | **57.5%** |
+| **F1 Score** | **60.5%** |
 
 #### ⚠️ Agent Review 성능 저하 패턴 분석
 
@@ -455,24 +295,58 @@ Batch 4: 14.3% ━━━━━
 - 반환값 확인 누락 완전 미탐 (CWE-252 0%)
 ```
 
+#### ⚠️ Agent Review 주의사항
+
+> **중요**: Agent Review는 리뷰 범위가 넓어지거나 깊이가 깊어질수록 **프리미엄 요청 수가 급격히 증가**합니다.
+
+| Batch | 파일 수 | 토큰 | 프리미엄 요청 | 파일당 프리미엄 |
+|-------|--------|------|-------------|---------------|
+| 1 | 10개 | 10만 | 1.3 | 0.13 |
+| 2 | 10개 | 21.5만 | 2.4 | 0.24 |
+| 3 | 10개 | 26.6만 | 2.6 | 0.26 |
+| 4 | 10개 | 50.9만 | 4.6 | **0.46** |
+
+```
+⚠️ 주의사항:
+1. 리뷰 범위가 많아질수록 프리미엄 요청 수가 지수적으로 증가
+   - Batch 1→4: 프리미엄 요청 3.5배 증가 (1.3 → 4.6)
+   - Batch 1→4: 토큰 사용량 5배 증가 (10만 → 50.9만)
+
+2. 깊이 있는 리뷰 시 비용 폭증 위험
+   - 파일당 프리미엄 요청이 Batch 4에서 0.46으로 급증
+   - 대규모 코드베이스 리뷰 시 비용 예측 어려움
+
+3. 권장 사용 방식:
+   - 소규모 PR (10개 미만 파일)에만 사용
+   - 대규모 리뷰는 사용자 커맨드 자동화 프롬프트 방식 권장
+   - Agent Review 대신 Opus/Sonnet/Composer 사용 시 비용 예측 가능
+```
+
 ---
 
 ## 4. 4가지 방식 성능 비교 종합
 
-### 4.1 전체 탐지 성능 비교
+### 4.1 전체 탐지 성능 비교 (Batch 1~4 통합)
 
 | 지표 | Opus 4.5 | Sonnet 4.5 | Composer-1 | Agent Review |
 |------|----------|------------|------------|--------------|
-| **True Positive Rate** | **100%** (28/28) | 96.4% (27/28) | 92.9% (26/28) | 46.4% (13/28) |
-| **False Positive** | 2개 | 5개 | 5개 | **2개** |
-| **True Negative Rate** | 83.3% (10/12) | 58.3% (7/12) | 58.3% (7/12) | **83.3%** (10/12) |
-| **False Negative** | **0개** | 1개 | 2개 | 15개 |
-| **정확도** | **95.0%** | 85.0% | 82.5% | 57.5% |
+| **True Positive (TP)** | 28 | 27 | 26 | 13 |
+| **True Negative (TN)** | 10 | 7 | 7 | 10 |
+| **False Positive (FP)** | 2 | 5 | 5 | 2 |
+| **False Negative (FN)** | 0 | 1 | 2 | 15 |
+| **True Positive Rate (민감도)** | **100%** | 96.4% | 92.9% | 46.4% |
+| **True Negative Rate (특이도)** | 83.3% | 58.3% | 58.3% | **83.3%** |
+| **False Positive Rate (오탐률)** | **16.7%** | 41.7% | 41.7% | **16.7%** |
+| **False Negative Rate (미탐률)** | **0%** | 3.6% | 7.1% | 53.6% |
+| **정확도 (Accuracy)** | **95.0%** | 85.0% | 82.5% | 57.5% |
+| **정밀도 (Precision)** | 93.3% | 84.4% | 83.9% | **86.7%** |
+| **재현율 (Recall)** | **100%** | 96.4% | 92.9% | 46.4% |
+| **F1 Score** | **96.6%** | 90.0% | 88.1% | 60.5% |
 
 ### 4.2 성능 순위
 
 ```
-📊 취약점 탐지율 (True Positive Rate) 순위:
+📊 취약점 탐지율 (True Positive Rate = Recall) 순위:
 1위: Opus 4.5      - 100.0% (28/28) ⭐ 최고 성능
 2위: Sonnet 4.5    -  96.4% (27/28)
 3위: Composer-1    -  92.9% (26/28)
@@ -484,6 +358,12 @@ Batch 4: 14.3% ━━━━━
 3위: Sonnet 4.5    - 58.3% (7/12)
 3위: Composer-1    - 58.3% (7/12)
 
+📊 F1 Score (정밀도×재현율 조화평균) 순위:
+1위: Opus 4.5      - 96.6% ⭐ 최고 성능
+2위: Sonnet 4.5    - 90.0%
+3위: Composer-1    - 88.1%
+4위: Agent Review  - 60.5%
+
 📊 전체 정확도 순위:
 1위: Opus 4.5      - 95.0% ⭐ 최고 성능
 2위: Sonnet 4.5    - 85.0%
@@ -491,11 +371,25 @@ Batch 4: 14.3% ━━━━━
 4위: Agent Review  - 57.5%
 
 📊 비용 효율성 (토큰 사용량) 순위:
-1위: Agent Review  - 109만 ⭐ 가장 효율적
-2위: Composer-1    - 230.3만
+1위: Agent Review  - 109만 (하지만 탐지율 46.4%로 권장X)
+2위: Composer-1    - 230.3만 ⭐ 비용 대비 성능 우수
 3위: Opus 4.5      - 356.5만
 4위: Sonnet 4.5    - 1,044.6만
 ```
+
+### 4.3 프리미엄 요청 수 비교 및 주의사항
+
+| 방식 | Batch 1 | Batch 2 | Batch 3 | Batch 4 | 총 요청 | 증가율 |
+|------|---------|---------|---------|---------|---------|--------|
+| **Opus 4.5** | 2 | 2 | 2 | 2 | **8** | 없음 (일정) |
+| **Sonnet 4.5** | 1 | 1 | 1 | 1 | **4** | 없음 (일정) |
+| **Composer-1** | 1 | 1 | 1 | 1 | **4** | 없음 (일정) |
+| **Agent Review** | 1.3 | 2.4 | 2.6 | 4.6 | **10.9** | ⚠️ **254% 증가** |
+
+> ⚠️ **Agent Review 주의**: 리뷰 범위가 넓어지거나 깊이가 깊어질수록 프리미엄 요청 수가 급격히 증가합니다.
+> - Batch 1→4: 프리미엄 요청 **3.5배 증가** (1.3 → 4.6)
+> - 토큰 사용량도 **5배 증가** (10만 → 50.9만)
+> - 대규모 코드베이스 리뷰 시 **비용 예측 불가**
 
 ---
 
@@ -662,6 +556,7 @@ Batch 4: 14.3% ━━━━━
    - 탐지율 46.4%로 절반 이상 미탐
    - Race Condition 완전 미탐
    - Batch 3, 4에서 성능 급락
+   - ⚠️ 리뷰 범위/깊이 증가 시 프리미엄 요청 급증 (3.5배 증가)
 ```
 
 ---
@@ -697,6 +592,8 @@ Batch 4: 14.3% ━━━━━
    - Batch 진행 중 성능 급락 현상 (피로 효과?)
    - Race Condition 완전 미탐
    - 간단한 NULL 체크 정도의 기본 검사만 가능
+   - ⚠️ **리뷰 범위/깊이 증가 시 프리미엄 요청 급증 (Batch 1→4: 3.5배)**
+   - 대규모 코드베이스 리뷰 시 비용 예측 불가
 
 ### 9.3 핵심 인사이트
 
@@ -711,7 +608,12 @@ Batch 4: 14.3% ━━━━━
    - Batch 1: 71.4% → Batch 4: 14.3%
    - 컨텍스트 누적 또는 "피로 효과"로 추정
 
-3. 모든 방식에서 공통 오탐
+3. Agent Review의 프리미엄 요청 급증 현상
+   - Batch 1: 1.3 → Batch 4: 4.6 (3.5배 증가)
+   - 리뷰 범위가 넓어지거나 깊어질수록 비용 급증
+   - 사용자 커맨드 자동화 방식은 Batch별 프리미엄 요청 일정
+
+4. 모든 방식에서 공통 오탐
    - test_006 (정상 free 패턴을 Memory Leak으로 오탐)
    - 이 패턴에 대한 추가 학습 필요
 
